@@ -1,0 +1,1 @@
+const ACTION_SQRT = 'SQRT'

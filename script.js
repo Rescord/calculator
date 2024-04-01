@@ -27,15 +27,18 @@ function negative(){
 };
 function resetLast(){
   if(a !== '' && b == ''){
-    a = '0'
-    return out.textContent = a ;
-  };
-  if(a !== '' && b !== ''){
-    b.length = 0;
-      return out.textContent = b;
+    if(sign){
+    a = ''
+    sign = ''
   } else {
-    return
+    a = '';
   }
+    return out.textContent = '0' ;
+  };
+  if(a !== '' && sign !== '' && b !== ''){
+    b = ''
+    return out.textContent = sign;
+  } 
 }
 document.querySelector(".reset-all").onclick = clearAll;
 
@@ -54,15 +57,22 @@ document.querySelector(".сalculator__buttons__basic").onclick = (event) => {
     console.log('test')
     return resetLast();
   };
-
+  if(event.target.classList.contains("btnf2")){
+    sigh = ACTION_SQRT;
+  };
   out.textContent = "0";
   const tap = event.target.textContent;
   if (digit.includes(tap)) {
     if (b === "" && sign === "") {
-      if(a !== '0')
+      if(tap === ','){
+        a = '0' + tap
+        console.log(a,sign,b)
+        out.textContent = a;
+      } else {
       a += tap;
-      console.log(a, b, sign);
+      console.log(a,sign,b);
       out.textContent = a;
+      }
     } 
     else if (a !== "" && b !== "" && finish) {
       b = tap;
@@ -73,13 +83,13 @@ document.querySelector(".сalculator__buttons__basic").onclick = (event) => {
       b += tap;
       out.textContent = b;
     }
-    console.log(a, b, sign);
+    console.log(a,sign,b);
     return;
   }
   if (action.includes(tap)) {
     sign = tap;
     out.textContent = sign;
-    console.log(a, b, sign);
+    console.log(a,sign,b);
     return;
   }
   if(tap === "="){
@@ -96,12 +106,15 @@ document.querySelector(".сalculator__buttons__basic").onclick = (event) => {
       case "-":
         a = a - b;
         break;
-      case "":
-        
+      case ACTION_SQRT:
+        a = Math.sqrt(a);
         break;
     }
     finish = true;
-    out.textContent = a;
+    b = ''
+    sign = ''
+    console.log(a,sign,b)
+    out.textContent = String(a);
   }
 };
 document.querySelector(".");
